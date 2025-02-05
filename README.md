@@ -1,0 +1,2 @@
+# mongodb-view-vs-pipeline
+MongoDBにおいて、Viewで検索するのとパイプラインで検索するのとではどちらがより高速か検証する
