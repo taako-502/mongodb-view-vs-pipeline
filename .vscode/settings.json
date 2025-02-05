@@ -1,0 +1,10 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.defaultFormatter": "golang.go",
+  "go.formatTool": "goimports",
+  "go.useLanguageServer": true,
+  "go.testEnvFile": "${workspaceFolder}/.env",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true
+}
