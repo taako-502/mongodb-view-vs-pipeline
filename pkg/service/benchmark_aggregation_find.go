@@ -10,6 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
+// BenchmarkAggregationFind 集計を利用した検索のベンチマークを実行する
 func (s *service) BenchmarkAggregationFind(collection *mongo.Collection) time.Duration {
 	ctx := context.TODO()
 

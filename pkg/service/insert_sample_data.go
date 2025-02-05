@@ -9,6 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
+// InsertSampleData 検証に利用するサンプルデータを挿入する
 func (s *service) InsertSampleData(collection *mongo.Collection) {
 	ctx := context.TODO()
 	count, _ := collection.CountDocuments(ctx, bson.M{})

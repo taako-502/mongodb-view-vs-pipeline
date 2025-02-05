@@ -9,6 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
+// CreateView 検証に利用するビューを作成する
 func (s *service) CreateView(db *mongo.Database) {
 	fmt.Println("Creating MongoDB View...")
 

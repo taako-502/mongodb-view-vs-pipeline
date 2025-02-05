@@ -10,6 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
+// BenchmarkViewFind ビューを利用した検索のベンチマークを実行する
 func (s *service) BenchmarkViewFind(db *mongo.Database) time.Duration {
 	ctx := context.TODO()
 	collection := db.Collection(s.viewName)
