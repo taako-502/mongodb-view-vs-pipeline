@@ -3,19 +3,15 @@ package service
 import (
 	"context"
 	"fmt"
-	"log"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
 // CreateView 検証に利用するビューを作成する
-func (s *service) CreateView(db *mongo.Database) {
+func (s *service) CreateView(db *mongo.Database) error {
 	fmt.Println("Creating MongoDB View...")
-
 	_ = db.Collection(s.viewName).Drop(context.TODO())
-
-	// ビューの作成
 	command := bson.D{
 		{Key: "create", Value: s.viewName},
 		{Key: "viewOn", Value: s.collectionName},
@@ -24,10 +20,10 @@ func (s *service) CreateView(db *mongo.Database) {
 		}},
 	}
 
-	err := db.RunCommand(context.TODO(), command).Err()
-	if err != nil {
-		log.Fatalf("Failed to create view: %v", err)
+	if err := db.RunCommand(context.TODO(), command).Err(); err != nil {
+		return fmt.Errorf("failed to create view: %v", err)
 	}
 
 	fmt.Println("View created successfully.")
+	return nil
 }

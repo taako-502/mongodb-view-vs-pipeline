@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"time"
 
@@ -11,7 +10,7 @@ import (
 )
 
 // BenchmarkViewFind ビューを利用した検索のベンチマークを実行する
-func (s *service) BenchmarkViewFind(db *mongo.Database) time.Duration {
+func (s *service) BenchmarkViewFind(db *mongo.Database) (time.Duration, error) {
 	ctx := context.TODO()
 	collection := db.Collection(s.viewName)
 
@@ -28,6 +27,5 @@ func (s *service) BenchmarkViewFind(db *mongo.Database) time.Duration {
 	}
 
 	elapsed := time.Since(start)
-	fmt.Printf("View Find fetched %d documents.\n", count)
-	return elapsed
+	return elapsed, nil
 }

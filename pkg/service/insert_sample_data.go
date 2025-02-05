@@ -3,33 +3,31 @@ package service
 import (
 	"context"
 	"fmt"
-	"log"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
-	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
 // InsertSampleData 検証に利用するサンプルデータを挿入する
-func (s *service) InsertSampleData(collection *mongo.Collection) {
+func (s *service) InsertSampleData(num int64) error {
 	ctx := context.TODO()
-	count, _ := collection.CountDocuments(ctx, bson.M{})
-	if count >= s.numDocuments {
+	count, _ := s.collection.CountDocuments(ctx, bson.M{})
+	if count >= num {
 		fmt.Println("Sample data already exists, skipping insertion.")
-		return
+		return fmt.Errorf("sample data already exists")
 	}
 
-	fmt.Println("Inserting sample data...")
-	docs := make([]interface{}, s.numDocuments)
-	for i := range s.numDocuments {
+	docs := make([]interface{}, num)
+	for i := range num {
 		docs[i] = bson.M{
 			"name":  fmt.Sprintf("User%d", i),
 			"score": i % 100,
 		}
 	}
 
-	_, err := collection.InsertMany(ctx, docs)
+	_, err := s.collection.InsertMany(ctx, docs)
 	if err != nil {
-		log.Fatalf("Failed to insert sample data: %v", err)
+		return fmt.Errorf("failed to insert sample data: %v", err)
 	}
-	fmt.Println("Sample data inserted successfully.")
+
+	return nil
 }

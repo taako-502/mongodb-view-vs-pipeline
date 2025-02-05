@@ -1,19 +1,21 @@
 package service
 
+import "go.mongodb.org/mongo-driver/v2/mongo"
+
 type service struct {
+	collection     *mongo.Collection
 	viewName       string
 	collectionName string
-	numDocuments   int64
 }
 
 func NewService(
-	numDocuments int64,
+	collection *mongo.Collection,
 	viewName string,
 	collectionName string,
 ) *service {
 	return &service{
+		collection:     collection,
 		viewName:       viewName,
 		collectionName: collectionName,
-		numDocuments:   numDocuments,
 	}
 }

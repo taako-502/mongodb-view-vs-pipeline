@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"time"
 
@@ -11,11 +10,11 @@ import (
 )
 
 // BenchmarkAggregationFind 集計を利用した検索のベンチマークを実行する
-func (s *service) BenchmarkAggregationFind(collection *mongo.Collection) time.Duration {
+func (s *service) BenchmarkAggregationFind() (time.Duration, error) {
 	ctx := context.TODO()
 
 	start := time.Now()
-	cursor, err := collection.Aggregate(ctx, mongo.Pipeline{
+	cursor, err := s.collection.Aggregate(ctx, mongo.Pipeline{
 		bson.D{{Key: "$match", Value: bson.M{"score": bson.M{"$gte": 50}}}},
 	})
 	if err != nil {
@@ -29,6 +28,5 @@ func (s *service) BenchmarkAggregationFind(collection *mongo.Collection) time.Du
 	}
 
 	elapsed := time.Since(start)
-	fmt.Printf("Aggregation Find fetched %d documents.\n", count)
-	return elapsed
+	return elapsed, nil
 }

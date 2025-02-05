@@ -15,7 +15,6 @@ const (
 	databaseName   = "testdb"
 	collectionName = "testcollection"
 	viewName       = "testview"
-	numDocuments   = 100000
 )
 
 // go run main.go
@@ -29,12 +28,35 @@ func main() {
 	db := client.Database(databaseName)
 	collection := db.Collection(collectionName)
 
-	s := service.NewService(numDocuments, viewName, collectionName)
-	s.InsertSampleData(collection)
-	s.CreateView(db)
-	viewTime := s.BenchmarkViewFind(db)
-	aggTime := s.BenchmarkAggregationFind(collection)
+	s := service.NewService(collection, viewName, collectionName)
+	if err := s.CreateView(db); err != nil {
+		log.Fatalf("Failed to create view: %v", err)
+	}
+	if err := s.DropSampleData(); err != nil {
+		log.Fatalf("Failed to drop sample data: %v", err)
+	}
 
-	fmt.Printf("View find time: %v\n", viewTime)
-	fmt.Printf("Aggregation find time: %v\n", aggTime)
+	// データ量の増減による影響を検証
+	// 10,000件, 100,000件, 1,000,000件, 10,000,000件
+	test := []int64{10000, 100000, 1000000, 10000000}
+	for _, num := range test {
+		if err := s.InsertSampleData(num); err != nil {
+			log.Fatalf("Failed to insert sample data: %v", err)
+		}
+		viewTime, err := s.BenchmarkViewFind(db)
+		if err != nil {
+			log.Fatalf("Failed to drop sample data: %v", err)
+		}
+		aggTime, err := s.BenchmarkAggregationFind()
+		if err != nil {
+			log.Fatalf("Failed to drop sample data: %v", err)
+		}
+		fmt.Println("--------------------------------------------------")
+		fmt.Printf("Number of documents: %d\n", num)
+		fmt.Printf("View find time: %v\n", viewTime)
+		fmt.Printf("Aggregation find time: %v\n", aggTime)
+		if err := s.DropSampleData(); err != nil {
+			log.Fatalf("Failed to drop sample data: %v", err)
+		}
+	}
 }
