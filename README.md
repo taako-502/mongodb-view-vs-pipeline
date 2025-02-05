@@ -65,6 +65,7 @@ Aggregation find time: 4.154385792s
 
 ### 考察
 **ViewよりもAggregation Pipelineのほうがわずかに高速**
+
 （1）**ビュー (View) の仕組み**
 MongoDB の View は、内部的に Aggregation Pipeline によりデータを生成しており、実行時に同様の処理が走る。<br>
 そのため、Aggregation Pipeline とほぼ同等のパフォーマンスとなる。<br>
