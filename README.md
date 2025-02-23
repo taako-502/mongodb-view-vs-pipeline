@@ -42,25 +42,20 @@ go run main.go
 
 ## 実行結果
 
-```
+```bash
 Creating MongoDB View...
 View created successfully.
---------------------------------------------------
-Number of documents: 10000
-View find time: 31.941417ms
-Aggregation find time: 33.88025ms
---------------------------------------------------
-Number of documents: 100000
-View find time: 62.129084ms
-Aggregation find time: 60.480292ms
---------------------------------------------------
-Number of documents: 1000000
-View find time: 380.036291ms
-Aggregation find time: 363.028958ms
---------------------------------------------------
-Number of documents: 10000000
-View find time: 4.392320125s
-Aggregation find time: 4.154385792s
+Sample data does not exist, skipping deletion.
+goos: darwin
+goarch: arm64
+pkg: github.com/taako-502/mongodb-view-vs-pipeline
+cpu: Apple M4
+BenchmarkMongoDBViewVSPipeline/Documents_10000-10         	     204	   6435531 ns/op	  959612 B/op	   10230 allocs/op
+BenchmarkMongoDBViewVSPipeline/Documents_100000-10        	      22	  51809402 ns/op	 9597198 B/op	  100249 allocs/op
+BenchmarkMongoDBViewVSPipeline/Documents_1000000-10       	       2	 519818854 ns/op	98453756 B/op	 1010353 allocs/op
+BenchmarkMongoDBViewVSPipeline/Documents_10000000-10      	       1	3458297709 ns/op	626701904 B/op	 6358498 allocs/op
+PASS
+ok  	github.com/taako-502/mongodb-view-vs-pipeline	83.685s
 ```
 
 ### 考察

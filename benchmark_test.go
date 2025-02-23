@@ -17,7 +17,7 @@ const (
 	viewName       = "testview"
 )
 
-func BenchmarkMongoDB(b *testing.B) {
+func BenchmarkMongoDBViewVSPipeline(b *testing.B) {
 	client, err := mongo.Connect(options.Client().ApplyURI(mongoURI))
 	if err != nil {
 		b.Fatalf("MongoDB connection error: %v", err)
@@ -42,13 +42,11 @@ func BenchmarkMongoDB(b *testing.B) {
 				b.Fatalf("Failed to insert sample data: %v", err)
 			}
 			b.ResetTimer()
-			for i := 0; i < b.N; i++ {
-				_, err := s.BenchmarkViewFind(db)
-				if err != nil {
+			for range b.N {
+				if _, err := s.BenchmarkViewFind(db); err != nil {
 					b.Fatalf("Failed to find view: %v", err)
 				}
-				_, err = s.BenchmarkAggregationFind()
-				if err != nil {
+				if _, err = s.BenchmarkAggregationFind(); err != nil {
 					b.Fatalf("Failed to find aggregation: %v", err)
 				}
 			}
