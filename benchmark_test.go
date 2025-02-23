@@ -42,7 +42,7 @@ func BenchmarkMongoDBViewVSPipeline(b *testing.B) {
 				b.Fatalf("Failed to insert sample data: %v", err)
 			}
 			b.ResetTimer()
-			for range b.N {
+			for b.Loop() {
 				if _, err := s.BenchmarkViewFind(db); err != nil {
 					b.Fatalf("Failed to find view: %v", err)
 				}
