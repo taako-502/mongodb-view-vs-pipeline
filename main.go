@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/taako-502/mongodb-embedded-array-size-impact/pkg/service"
+	"github.com/taako-502/mongodb-view-vs-pipeline/pkg/service"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
