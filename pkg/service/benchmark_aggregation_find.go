@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"log"
+	"fmt"
 	"time"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
@@ -18,7 +18,7 @@ func (s *service) BenchmarkAggregationFind() (time.Duration, error) {
 		bson.D{{Key: "$match", Value: bson.M{"score": bson.M{"$gte": 50}}}},
 	})
 	if err != nil {
-		log.Fatalf("Failed to execute aggregation: %v", err)
+		return 0, fmt.Errorf("failed to create aggregation: %w", err)
 	}
 	defer cursor.Close(ctx)
 

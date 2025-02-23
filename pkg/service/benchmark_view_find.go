@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"log"
+	"fmt"
 	"time"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
@@ -17,7 +17,7 @@ func (s *service) BenchmarkViewFind(db *mongo.Database) (time.Duration, error) {
 	start := time.Now()
 	cursor, err := collection.Find(ctx, bson.M{})
 	if err != nil {
-		log.Fatalf("Failed to find from view: %v", err)
+		return 0, fmt.Errorf("failed to find from view: %w", err)
 	}
 	defer cursor.Close(ctx)
 
