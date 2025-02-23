@@ -10,14 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
-const (
-	mongoURI       = "mongodb://localhost:27017"
-	databaseName   = "mongodb_view_vs_pipeline"
-	collectionName = "testcollection"
-	viewName       = "testview"
-)
-
-func BenchmarkMongoDBViewVSPipeline(b *testing.B) {
+func BenchmarkMongoDBView(b *testing.B) {
 	client, err := mongo.Connect(options.Client().ApplyURI(mongoURI))
 	if err != nil {
 		b.Fatalf("MongoDB connection error: %v", err)
@@ -37,7 +30,7 @@ func BenchmarkMongoDBViewVSPipeline(b *testing.B) {
 
 	test := []int64{10000, 100000, 1000000, 10000000}
 	for _, num := range test {
-		b.Run(fmt.Sprintf("Documents_%d", num), func(b *testing.B) {
+		b.Run(fmt.Sprintf("View_Documents_%d", num), func(b *testing.B) {
 			if err := s.InsertSampleData(num); err != nil {
 				b.Fatalf("Failed to insert sample data: %v", err)
 			}
@@ -45,9 +38,6 @@ func BenchmarkMongoDBViewVSPipeline(b *testing.B) {
 			for b.Loop() {
 				if _, err := s.BenchmarkViewFind(db); err != nil {
 					b.Fatalf("Failed to find view: %v", err)
-				}
-				if _, err = s.BenchmarkAggregationFind(); err != nil {
-					b.Fatalf("Failed to find aggregation: %v", err)
 				}
 			}
 			b.StopTimer()
