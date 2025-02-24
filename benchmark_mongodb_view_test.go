@@ -36,7 +36,7 @@ func BenchmarkMongoDBView(b *testing.B) {
 			}
 			b.ResetTimer()
 			for b.Loop() {
-				if _, err := s.BenchmarkViewFind(db); err != nil {
+				if err := s.FindUsingView(db); err != nil {
 					b.Fatalf("Failed to find view: %v", err)
 				}
 			}

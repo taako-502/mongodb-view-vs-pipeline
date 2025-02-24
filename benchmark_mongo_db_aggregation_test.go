@@ -36,7 +36,7 @@ func BenchmarkMongoDBAggregation(b *testing.B) {
 			}
 			b.ResetTimer()
 			for b.Loop() {
-				if _, err := s.BenchmarkAggregationFind(); err != nil {
+				if err := s.FindUsingAggregation(); err != nil {
 					b.Fatalf("Failed to find aggregation: %v", err)
 				}
 			}
