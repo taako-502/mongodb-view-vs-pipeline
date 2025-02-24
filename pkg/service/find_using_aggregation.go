@@ -2,23 +2,20 @@ package service
 
 import (
 	"context"
-	"log"
-	"time"
+	"fmt"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
-// BenchmarkAggregationFind 集計を利用した検索のベンチマークを実行する
-func (s *service) BenchmarkAggregationFind() (time.Duration, error) {
+// FindUsingAggregation 集計を利用した検索のベンチマークを実行する
+func (s *service) FindUsingAggregation() error {
 	ctx := context.TODO()
-
-	start := time.Now()
 	cursor, err := s.collection.Aggregate(ctx, mongo.Pipeline{
 		bson.D{{Key: "$match", Value: bson.M{"score": bson.M{"$gte": 50}}}},
 	})
 	if err != nil {
-		log.Fatalf("Failed to execute aggregation: %v", err)
+		return fmt.Errorf("failed to create aggregation: %w", err)
 	}
 	defer cursor.Close(ctx)
 
@@ -27,6 +24,5 @@ func (s *service) BenchmarkAggregationFind() (time.Duration, error) {
 		count++
 	}
 
-	elapsed := time.Since(start)
-	return elapsed, nil
+	return nil
 }

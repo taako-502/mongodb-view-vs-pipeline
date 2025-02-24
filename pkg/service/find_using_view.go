@@ -2,22 +2,20 @@ package service
 
 import (
 	"context"
-	"log"
-	"time"
+	"fmt"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
-// BenchmarkViewFind ビューを利用した検索のベンチマークを実行する
-func (s *service) BenchmarkViewFind(db *mongo.Database) (time.Duration, error) {
+// FindUsingView ビューを利用した検索を実行する
+func (s *service) FindUsingView(db *mongo.Database) error {
 	ctx := context.TODO()
 	collection := db.Collection(s.viewName)
 
-	start := time.Now()
 	cursor, err := collection.Find(ctx, bson.M{})
 	if err != nil {
-		log.Fatalf("Failed to find from view: %v", err)
+		return fmt.Errorf("failed to find from view: %w", err)
 	}
 	defer cursor.Close(ctx)
 
@@ -26,6 +24,5 @@ func (s *service) BenchmarkViewFind(db *mongo.Database) (time.Duration, error) {
 		count++
 	}
 
-	elapsed := time.Since(start)
-	return elapsed, nil
+	return nil
 }
