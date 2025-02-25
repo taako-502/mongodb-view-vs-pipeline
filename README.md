@@ -31,13 +31,13 @@ MongoDB において、View で検索するのとパイプラインで検索す�
 MongoDB の起動。
 
 ```zsh
-docker run -d --name mongodb_view_vs_pipeline -p 27017:27017 mongo
+$ docker run -d --name mongodb_view_vs_pipeline -p 27017:27017 mongo
 ```
 
 実行
 
 ```zsh
-go run main.go
+$ make bench
 ```
 
 ## 実行結果
