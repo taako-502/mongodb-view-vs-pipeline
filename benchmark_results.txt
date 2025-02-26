@@ -1,0 +1,20 @@
+Creating MongoDB View...
+View created successfully.
+Sample data does not exist, skipping deletion.
+goos: darwin
+goarch: arm64
+pkg: github.com/taako-502/mongodb-view-vs-pipeline
+cpu: Apple M4
+BenchmarkMongoDBAggregation/Aggregation_Documents_10000-10         	     356	   3120913 ns/op	  480202 B/op	    5121 allocs/op
+BenchmarkMongoDBAggregation/Aggregation_Documents_100000-10        	      38	  27487765 ns/op	 4797998 B/op	   50127 allocs/op
+BenchmarkMongoDBAggregation/Aggregation_Documents_1000000-10       	       4	 256007052 ns/op	48745788 B/op	  500156 allocs/op
+BenchmarkMongoDBAggregation/Aggregation_Documents_10000000-10      	       1	3058336334 ns/op	492452480 B/op	 5000947 allocs/op
+Creating MongoDB View...
+View created successfully.
+Sample data does not exist, skipping deletion.
+BenchmarkMongoDBView/View_Documents_10000-10                       	     272	   3951175 ns/op	  479499 B/op	    5109 allocs/op
+BenchmarkMongoDBView/View_Documents_100000-10                      	      40	  28524936 ns/op	 4797346 B/op	   50115 allocs/op
+BenchmarkMongoDBView/View_Documents_1000000-10                     	       4	 274133458 ns/op	48751440 B/op	  500161 allocs/op
+BenchmarkMongoDBView/View_Documents_10000000-10                    	       1	2855694667 ns/op	492447440 B/op	 5000924 allocs/op
+PASS
+ok  	github.com/taako-502/mongodb-view-vs-pipeline	95.057s

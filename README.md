@@ -28,42 +28,8 @@ MongoDB において、View で検索するのとパイプラインで検索す�
 
 ## 実行方法
 
-MongoDB の起動。
-
 ```zsh
-$ docker run -d --name mongodb_view_vs_pipeline -p 27017:27017 mongo
-```
-
-実行
-
-```zsh
-$ make bench
-```
-
-## 実行結果
-
-```bash
-% make bench
-go test -bench=. ./...
-Creating MongoDB View...
-View created successfully.
-Sample data does not exist, skipping deletion.
-goos: darwin
-goarch: arm64
-pkg: github.com/taako-502/mongodb-view-vs-pipeline
-cpu: Apple M4
-BenchmarkMongoDBAggregation/Aggregation_Documents_10000-10                   364           3303544 ns/op
-BenchmarkMongoDBAggregation/Aggregation_Documents_100000-10                   44          26777161 ns/op
-BenchmarkMongoDBAggregation/Aggregation_Documents_1000000-10                   4         310653740 ns/op
-BenchmarkMongoDBAggregation/Aggregation_Documents_10000000-10                  1        2752961292 ns/op
-Creating MongoDB View...
-View created successfully.
-Sample data does not exist, skipping deletion.
-BenchmarkMongoDBView/View_Documents_10000-10                                 212           5241549 ns/op
-BenchmarkMongoDBView/View_Documents_100000-10                                 37          28632985 ns/op
-BenchmarkMongoDBView/View_Documents_1000000-10                                 4         267294375 ns/op
-BenchmarkMongoDBView/View_Documents_10000000-10                                1        2816548250 ns/op
-PASS
+$ make benchmark
 ```
 
 ### 考察
